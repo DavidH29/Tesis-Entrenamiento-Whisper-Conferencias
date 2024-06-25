@@ -45,47 +45,30 @@ Estas dependencias se pueden instalar mediante el archivo `requirements.txt` men
 
 1. **Cargar los datasets**
     ```python
-    from datasets import Dataset, concatenate_datasets, load_from_disk
-    import pandas as pd
-    from datasets import Audio
-    import gc
-    import os
-    from transformers import WhisperFeatureExtractor, WhisperTokenizer, WhisperProcessor, WhisperForConditionalGeneration, \
-        Seq2SeqTrainingArguments, Seq2SeqTrainer
-    from dataclasses import dataclass
-    from typing import Any, Dict, List, Union
-    import torch
-    import evaluate
-
-    # Cargar los datos de entrenamiento y prueba desde archivos CSV
     train_df = pd.read_csv("train.csv")
     test_df = pd.read_csv("test.csv")
     ```
 
 2. **Renombrar las columnas**
     ```python
-    # Renombrar las columnas para que sean consistentes
     train_df.columns = ["audio", "sentence"]
     test_df.columns = ["audio", "sentence"]
     ```
 
 3. **Convertir a Dataset de Hugging Face**
     ```python
-    # Convertir los DataFrames de pandas a objetos Dataset de Hugging Face
     train_dataset = Dataset.from_pandas(train_df)
     test_dataset = Dataset.from_pandas(test_df)
     ```
 
 4. **Definir la frecuencia de muestreo**
     ```python
-    # Definir la frecuencia de muestreo para los datos de audio
     train_dataset = train_dataset.cast_column("audio", Audio(sampling_rate=16000))
     test_dataset = test_dataset.cast_column("audio", Audio(sampling_rate=16000))
     ```
 
 5. **Cargar los componentes necesarios**
     ```python
-    # Cargar los componentes necesarios del modelo Whisper de Hugging Face
     feature_extractor = WhisperFeatureExtractor.from_pretrained("openai/whisper-base")
     tokenizer = WhisperTokenizer.from_pretrained("openai/whisper-base", language="Spanish", task="transcribe")
     processor = WhisperProcessor.from_pretrained("openai/whisper-base", language="Spanish", task="transcribe")
@@ -93,7 +76,6 @@ Estas dependencias se pueden instalar mediante el archivo `requirements.txt` men
 
 6. **Función para preparar el dataset**
     ```python
-    # Función para preparar el dataset
     def prepare_dataset(examples):
         # Extraer características de audio
         audio = examples["audio"]
@@ -107,7 +89,6 @@ Estas dependencias se pueden instalar mediante el archivo `requirements.txt` men
 
 7. **Procesar el dataset en fragmentos**
     ```python
-    # Dividir y procesar el dataset en fragmentos más pequeños y guardarlos en disco
     def process_in_batches(dataset, prepare_function, save_path):
         os.makedirs(save_path, exist_ok=True)
         temp_datasets = []
@@ -124,7 +105,6 @@ Estas dependencias se pueden instalar mediante el archivo `requirements.txt` men
 
 8. **Definir tamaño de los lotes y rutas de guardado**
     ```python
-    # Definir el tamaño de los lotes y las rutas de guardado
     batch_size = 500
     train_save_path = "train_temp"
     test_save_path = "test_temp"
@@ -136,7 +116,6 @@ Estas dependencias se pueden instalar mediante el archivo `requirements.txt` men
 
 9. **Cargar y concatenar los datasets**
     ```python
-    # Cargar los datasets procesados desde el disco y concatenarlos
     def load_temp_datasets(temp_paths):
         datasets = [load_from_disk(path) for path in temp_paths]
         return concatenate_datasets(datasets)
@@ -166,15 +145,13 @@ Estas dependencias se pueden instalar mediante el archivo `requirements.txt` men
     data_collator = DataCollatorSpeechSeq2SeqWithPadding(processor=processor)
     ```
 
-11. **Cargar métrico WER**
+11. **Cargar métrico WER (Word Error Rate)**
     ```python
-    # Cargar el métrico WER (Word Error Rate)
     metric = evaluate.load("wer")
     ```
 
 12. **Función para computar las métricas**
     ```python
-    # Función para computar las métricas de evaluación
     def compute_metrics(pred):
         pred_ids = pred.predictions
         label_ids = pred.label_ids
@@ -187,7 +164,6 @@ Estas dependencias se pueden instalar mediante el archivo `requirements.txt` men
 
 13. **Cargar el modelo preentrenado**
     ```python
-    # Cargar el modelo preentrenado Whisper
     model = WhisperForConditionalGeneration.from_pretrained("openai/whisper-base")
     model.config.language = "spanish"
     model.config.task = "transcribe"
@@ -197,7 +173,6 @@ Estas dependencias se pueden instalar mediante el archivo `requirements.txt` men
 
 14. **Definir los argumentos de entrenamiento**
     ```python
-    # Definir los argumentos de entrenamiento
     training_args = Seq2SeqTrainingArguments(
         output_dir="./whisper-finetuned-es",
         per_device_train_batch_size=16,
@@ -224,7 +199,6 @@ Estas dependencias se pueden instalar mediante el archivo `requirements.txt` men
 
 15. **Instanciar el entrenador**
     ```python
-    # Instanciar el entrenador
     trainer = Seq2SeqTrainer(
         args=training_args,
         model=model,
@@ -238,7 +212,6 @@ Estas dependencias se pueden instalar mediante el archivo `requirements.txt` men
 
 16. **Entrenar el modelo**
     ```python
-    # Entrenar el modelo
     trainer.train()
     ```
 
@@ -266,13 +239,11 @@ Estas dependencias se pueden instalar mediante el archivo `requirements.txt` men
 
 2. **Cargar el procesador original**
     ```python
-    # Cargar el procesador original
     processor = WhisperProcessor.from_pretrained("openai/whisper-base")
     ```
 
 3. **Función para cargar y preprocesar el audio**
     ```python
-    # Función para cargar y preprocesar el audio
     def load_and_preprocess_audio(file_path, target_sample_rate=16000):
         audio = AudioSegment.from_file(file_path)
         audio = audio.set_frame_rate(target_sample_rate)
@@ -283,7 +254,6 @@ Estas dependencias se pueden instalar mediante el archivo `requirements.txt` men
 
 4. **Función para predecir utilizando un modelo finetuned**
     ```python
-    # Función para predecir utilizando un modelo finetuned
     def transcribe_audio(model, file_path):
         # Cargar y procesar el audio
         audio_input = load_and_preprocess_audio(file_path)
@@ -320,7 +290,6 @@ Estas dependencias se pueden instalar mediante el archivo `requirements.txt` men
 
 5. **Función para verificar si una transcripción es repetitiva**
     ```python
-    # Función para verificar si una transcripción es repetitiva
     def is_repetitive(text, threshold=0.2):
         words = text.split()
         most_common_word, count = Counter(words).most_common(1)[0]
@@ -329,7 +298,6 @@ Estas dependencias se pueden instalar mediante el archivo `requirements.txt` men
 
 6. **Función para evaluar y seleccionar la mejor transcripción**
     ```python
-    # Función para evaluar y seleccionar la mejor transcripción
     def evaluate_transcriptions(transcriptions):
         valid_transcriptions = [(trans, score) for trans, score in transcriptions if not is_repetitive(trans)]
 
@@ -353,7 +321,6 @@ Estas dependencias se pueden instalar mediante el archivo `requirements.txt` men
 
 7. **Ejemplo de uso con un nuevo archivo de audio**
     ```python
-    # Ejemplo de uso con un nuevo archivo de audio
     # ACLARACION: Estas rutas son personales según la PC en la que se entrenó el modelo, se recomienda
     # modificar según su propia ruta
     new_audio_path = r"C:\Users\renec\PycharmProjects\speechrecognition\TrainignModel\Beta\whisper-finetuned-es\CONIA AUDIOS\CONIA-2022-Sesión-11 SAMPLE 119.wav"
@@ -361,7 +328,6 @@ Estas dependencias se pueden instalar mediante el archivo `requirements.txt` men
 
 8. **Obtener transcripciones de cada checkpoint y almacenarlas con sus puntuaciones de confianza**
     ```python
-    # Obtener transcripciones de cada checkpoint y almacenarlas con sus puntuaciones de confianza
     transcriptions_with_confidences = []
 
     for checkpoint_path in checkpoint_paths:
@@ -378,13 +344,11 @@ Estas dependencias se pueden instalar mediante el archivo `requirements.txt` men
 
 9. **Evaluar y seleccionar la mejor transcripción**
     ```python
-    # Evaluar y seleccionar la mejor transcripción
     best_transcription = evaluate_transcriptions(transcriptions_with_confidences)
     ```
 
 10. **Guardar el resultado final en un archivo txt**
     ```python
-    # Guardar el resultado final en un archivo txt
     # ACLARACION: Definir ruta propia para almacenar el archivo TXT con la transcripcion final
     output_file_path = r"C:\Users\renec\PycharmProjects\speechrecognition\TrainignModel\Beta\final_transcription.txt"
 
