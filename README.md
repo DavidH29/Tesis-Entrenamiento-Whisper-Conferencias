@@ -15,8 +15,8 @@ El objetivo de este proyecto es ajustar el modelo Whisper para transcribir audio
 
 1. **Clonar el repositorio**
     ```sh
-    git clone "Repo"
-    cd "repo"
+    git clone "[Repo](https://github.com/DavidH29/Tesis-Entrenamiento-Whisper-Conferencias.git)"
+    cd "[repo](https://github.com/DavidH29/Tesis-Entrenamiento-Whisper-Conferencias.git)"
     ```
 
 2. **Descargar y preparar los datasets**
