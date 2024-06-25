@@ -1,10 +1,10 @@
-# Proyecto de Tesis: Fine-tuning del Modelo Whisper para Transcripción en Español
+# TRANSFER LEARNING PARA LA TRANSCRIPCIÓN DE CONFERENCIAS DE ÁREAS STEM
 
 Este proyecto se centra en el entrenamiento y ajuste fino del modelo Whisper de OpenAI para la tarea de transcripción de audio en español. Todo el proyecto está desarrollado en Python.
 
-## Descripción
+## Objetivo
 
-El objetivo de este proyecto es ajustar el modelo Whisper para transcribir audio en español. Utiliza datasets de entrenamiento y prueba que contienen pares de audio y texto.
+Estudiar el funcionamiento de sistemas de reconocimiento del habla mediante el entrenamiento de un modelo con la técnica de transfer learning
 
 ## Requisitos
 
