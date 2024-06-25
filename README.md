@@ -219,13 +219,6 @@ Estas dependencias se pueden instalar mediante el archivo `requirements.txt` men
 
 1. **Cargar las rutas de los checkpoints**
     ```python
-    from transformers import WhisperForConditionalGeneration, WhisperProcessor
-    import torch
-    from collections import Counter
-    import numpy as np
-    from pydub import AudioSegment
-
-    # Lista de rutas a los checkpoints
     # ACLARACION: Estas rutas son personales según la PC en la que se entrenó el modelo, se recomienda
     # modificar según su propia ruta
 
