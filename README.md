@@ -361,11 +361,10 @@ Agradecimientos especiales al equipo de TED-Talks por permitirnos compartir este
 Este programa se ejecutó inicialmente en la siguiente configuración de hardware y software:
 
 - **Procesador**: AMD Ryzen 7 3700X 8-Core Processor 3.60 GHz
-- **RAM**: 32.0 GB
-- **Sistema Operativo**: 64-bit, x64-based processor
+- **RAM**: 32.0 GB 
 - **GPU**: NVIDIA GeForce RTX 3060
 - **Almacenamiento**: 1.5 TB
-- **Sistema operativo**: Windows
+- **Sistema operativo**: Windows 64-bit, x64-based processor
 
 ## Contribución
 
