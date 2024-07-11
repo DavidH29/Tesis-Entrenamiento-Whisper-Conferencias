@@ -6,10 +6,17 @@ Este proyecto se centra en el entrenamiento y ajuste fino del modelo Whisper de 
 
 Estudiar el funcionamiento de sistemas de reconocimiento del habla mediante el entrenamiento de un modelo con la técnica de transfer learning
 
+## Modelo entrenado
+
+El siguiente link contiene el modelo entrenado el cual fue utilizado para el desarrollo de esta tesis:
+
+        https://drive.google.com/drive/u/4/folders/1Xx_9lYUVSvgLHRADbVmC86sirVFHoUQx
+
 ## Requisitos
 
 - Python 3.8 o superior
 - pip (Gestor de paquetes de Python)
+
 
 ## Instalación
 
