@@ -384,6 +384,43 @@ Agradecimientos especiales al equipo de TED-Talks por permitirnos compartir este
 	year = "2019"
 }
 
+## Cómo Utilizar el Dataset
+
+Al descargar el dataset, recibirás un archivo .tgz (se debe descomprimir) que contiene los siguientes elementos:
+
+    - README 
+    - LICENSE
+    - files (carpeta)
+    - speech (carpeta)
+
+Dentro de la carpeta "files", encontrarás el archivo "TEDx_Spanish.transcription", que contiene todas las transcripciones de los audios ubicados en la carpeta "speech".
+
+### Preparación del Dataset para el Entrenamiento
+
+Para entrenar el modelo, es necesario crear dos archivos CSV que serán utilizados en el proceso de entrenamiento:
+
+    - train.csv
+    - test.csv
+
+**Nota:** Estos archivos CSV están disponibles en este repositorio.
+
+### Estructura de los Archivos CSV
+
+Cada archivo CSV debe contener las siguientes columnas:
+
+    "Ruta exacta del archivo de audio, transcripción del audio"
+
+**Ejemplo:**
+
+    C:\Users\renec\Desktop\tedx_spanish_corpus\tedx_spanish_corpus\speech\TEDX_F_001_SPA_0001.wav,y eso para mí se puede reducir en qué en un despertar de la
+
+**Nota Importante:** Las rutas en los archivos CSV de este repositorio están basadas en la computadora donde fueron creados. Si deseas utilizar los archivos en otra computadora, deberás modificar las rutas según la ubicación de los archivos en tu sistema.
+
+Es fundamental que todos los audios del dataset sigan el mismo formato descrito anteriormente para garantizar un procesamiento correcto durante el entrenamiento del modelo y deben ir en el archivo train.csv.
+
+El archivo "test.csv" llevará la misma información que "train.csv", pero en menor cantidad. Es decir, en este caso el archivo "train.csv" contiene 11,244 líneas; por lo tanto, el archivo "test.csv" se dejó con 1,000 líneas, porque solo se utiliza para evaluar el rendimiento del modelo, no para entrenarse.
+
+
 ## Configuración del Sistema
 
 Este programa se ejecutó inicialmente en la siguiente configuración de hardware y software:
