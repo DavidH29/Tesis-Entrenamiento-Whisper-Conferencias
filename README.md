@@ -22,7 +22,7 @@ El siguiente link contiene el modelo entrenado el cual fue utilizado para el des
 
 1. **Clonar el repositorio**
     ```sh
-    git clone "[Repo](https://github.com/DavidH29/Tesis-Entrenamiento-Whisper-Conferencias.git)"
+    git clone https://github.com/DavidH29/Tesis-Entrenamiento-Whisper-Conferencias.git
     ```
 
 2. **Descargar y preparar los datasets**
